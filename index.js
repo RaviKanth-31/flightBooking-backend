@@ -38,7 +38,6 @@ app.use("/auth", authRoute)
 app.use("/flights", flightRoute)
 app.use("/users", userRoute)
 app.use("/seats", seatRoute)
-
 app.listen(8089, ()=>{
     connect()
     console.log("Connected to backend")

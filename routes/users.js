@@ -1,5 +1,5 @@
 import express from "express"
-import { createUser, updateUser, deleteUser, getUser, getAllUsers } from "../controllers/users.js";
+import { createUser, updateUser, deleteUser, getUser, getAllUsers, addBooking,  getUserBookings } from "../controllers/users.js";
 import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
 const router = express.Router();
 
@@ -23,6 +23,10 @@ router.delete("/:id", verifyUser, deleteUser)
 router.get("/:id",verifyUser, getUser)
 //GET ALL
 router.get("/", verifyAdmin, getAllUsers)
+
+//Seats
+router.post("/bookings/:id", addBooking)
+router.get("/bookings/:id", getUserBookings)
 
 
 export default router

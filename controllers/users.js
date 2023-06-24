@@ -1,3 +1,4 @@
+import Flight from "../models/Flight.js";
 import User from "../models/User.js";
 export const createUser = async (req, res)=>{
     const newUser = new User(req.body)
@@ -49,3 +50,49 @@ export const getAllUsers = async (req, res)=>{
         res.status(500).json(error)
     }
 }
+
+export const addBooking = async (req, res) => {
+  try {
+    const userId = req.params.id; 
+    const flightId = req.body.flightId;
+    const seatId = req.body.seatId;
+    // Find the user based on the user ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      // User not found
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    // Add the booking ID to the user's bookings array
+    user.bookings.push({flightId: flightId, seatId: seatId});
+    // Save the updated user document
+    await user.save();
+    res.status(200).json({ message: 'Booking added successfully.' });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while adding the booking.' });
+  }
+};
+
+
+export const getUserBookings = async (req, res, next) => {
+    try {
+      const user = await User.findById(req.params.id).populate('bookings.flightId');
+  
+      if (!user) {
+        alert("user not found")
+      }
+  
+      const bookings = user.bookings.map(booking => ({
+        flightNumber: booking.flightId,
+        seatNumber: booking.seatId
+      }));
+      console.log(bookings)
+      return bookings;
+    } catch (err) {
+      console.error(err);
+        next(err);
+    }
+  };
+  
+

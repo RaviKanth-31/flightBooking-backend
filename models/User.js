@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema({
     isAdmin:{
         type: Boolean,
         default: false
-    }
+    },
+    bookings:[{flightId:String, seatId: String}]
 }, {timestamps: true})
 export default mongoose.model("User", UserSchema)

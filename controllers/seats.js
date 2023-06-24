@@ -1,5 +1,6 @@
 import Seat from "../models/Seat.js";
 import Flight from "../models/Flight.js";
+import User from "../models/User.js";
 
 export const createSeat = async (req, res, next)=>{
     const flightId = req.params.flightid;
@@ -72,3 +73,4 @@ export const changeSeatAvailability = async (req, res)=>{
         res.status(500).json(err)
     }
 }
+
